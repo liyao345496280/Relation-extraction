@@ -8,8 +8,6 @@ import torch
 import torch.nn as nn
 from transformers import BertModel
 from modules.GPLinkerlayer import GlobalPointer
-from modules.DGCNN import IDCNN
-from modules.Muti_DGCNN import IDCNN_1
 from modules.attention import MultiHeadedAttention,LocalMultiHeadedAttention,AtrousMultiHeadedAttention
 class REmodel(nn.Module):
     def __init__(self, config):
@@ -24,8 +22,6 @@ class REmodel(nn.Module):
         self.linear = nn.Linear(self.config.bert_dim,self.config.bert_dim)
         self.dropout = SpatialDropout(0.1)
         self.layer_norm = nn.LayerNorm(self.config.bert_dim)
-        self.idcnn = IDCNN(self.config.bert_dim, self.config.hidden_size)
-        self.idcnn_1 = IDCNN_1(self.config.bert_dim, self.config.hidden_size)
         self.linear1 = nn.Linear(self.config.hidden_size, self.config.bert_dim)
         self.linear2 = nn.Linear(self.config.bert_dim*2, self.config.bert_dim)
         self.linear2.weight = nn.Parameter(torch.ones(self.config.bert_dim,self.config.bert_dim*2))
